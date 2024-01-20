@@ -1,54 +1,45 @@
-import Hotel from "../models/Hotel.js";
+import User from "../models/User.js";
 
-export const createHotel = async (req,res,next)=>{
-    const newHotel = new Hotel(req.body)
-
+export const updateUser = async (req,res,next)=>{
     try {
-        const savedHotel = await newHotel.save()
-        res.status(200).json(savedHotel)
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            { new: true}
+        );
+        res.status(200).json(updatedUser)
     } catch (err) {
         next(err);
     }
 }
 
-export const updateHotel = async (req,res,next)=>{
-    const newHotel = new Hotel(req.body)
-
+export const deleteUser = async (req,res,next)=>{
     try {
-        const savedHotel = await newHotel.save()
-        res.status(200).json(savedHotel)
-    } catch (err) {
-        next(err);
-    }
-}
-
-export const deleteHotel = async (req,res,next)=>{
-    try {
-        await Hotel.findByIdAndDelete(
+        await User.findByIdAndDelete(
             req.params.id
             );
-        res.status(200).json("Hotel has been deleted.")
+        res.status(200).json("User has been deleted.")
     } catch (err) {
         next(err);
     }
 }
 
-export const getHotel = async (req,res,next)=>{
+export const getUser = async (req,res,next)=>{
     try {
-        const hotel = await Hotel.findById(
+        const user = await User.findById(
             req.params.id
             );
-        res.status(200).json(hotel)
+        res.status(200).json(user)
     } catch (err) {
         next(err);
     }
 }
 
-export const getHotels = async (req,res,next)=>{
+export const getUsers = async (req,res,next)=>{
 
     try {
-        const hotels = await Hotel.find();
-        res.status(200).json(hotels)
+        const users = await User.find();
+        res.status(200).json(users)
     } catch (err) {
         next(err);
     }
